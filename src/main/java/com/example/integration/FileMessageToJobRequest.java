@@ -8,8 +8,6 @@ import org.springframework.messaging.Message;
 
 import java.io.File;
 
-import static org.assertj.core.util.DateUtil.now;
-
 public class FileMessageToJobRequest {
 
     private final Job job;
@@ -22,9 +20,7 @@ public class FileMessageToJobRequest {
     public JobLaunchRequest toRequest(Message<File> message) {
         JobParametersBuilder jobParametersBuilder = new JobParametersBuilder();
 
-        jobParametersBuilder
-                .addString("input.file.name", message.getPayload().getAbsolutePath())
-                .addDate("run.date", now());
+        jobParametersBuilder.addString("input.file.name", message.getPayload().getAbsolutePath());
 
         return new JobLaunchRequest(job, jobParametersBuilder.toJobParameters());
     }
